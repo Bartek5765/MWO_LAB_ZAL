@@ -13,7 +13,7 @@ public class TerminalInput {
     private YearMonth date;
     private String rootPath;
 
-    public static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
+    public static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public TerminalInput() {}
     public TerminalInput(ReportType reportType, YearMonth date, String rootPath) {
         this.reportType = reportType;
@@ -37,24 +37,31 @@ public class TerminalInput {
     public static TerminalInput readFromConsole() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Podaj typ raportu - employees lub projects ");
-        String input = sc.nextLine().trim();
-        ReportType reportType;
-        switch (input) {
-            case "employees":
-                reportType = ReportType.employees;
-                break;
-            case "projects":
-                reportType = ReportType.projects;
-                break;
-            default:
-                reportType = ReportType.error;
-                System.out.println("Zły typ raportu. Podaj typ raportu - employees lub projects ");
+        ReportType reportType = ReportType.error;
+        boolean isReportTypeCorrect = false;
+        while (!isReportTypeCorrect) {
+            System.out.print("Podaj typ raportu - employees lub projects ");
+            String input = sc.nextLine().trim();
+            switch (input) {
+                case "employees":
+                    reportType = ReportType.employees;
+                    isReportTypeCorrect = true;
+                    break;
+                case "projects":
+                    reportType = ReportType.projects;
+                    isReportTypeCorrect = true;
+                    break;
+                default:
+                    reportType = ReportType.error;
+                    System.out.println("Zły typ raportu. Podaj typ raportu - employees lub projects ");
+                    isReportTypeCorrect = false;
+                    break;
+            }
         }
 
         YearMonth ym = null;
         while (ym == null) {
-            System.out.print("Podaj datę od w formacie RRRR-MM");
+            System.out.print("Podaj datę od w formacie RRRR-MM-DD ");
             String dateStr = sc.nextLine().trim();
             try {
                 ym = YearMonth.parse(dateStr, YM_FORMATTER);
@@ -74,21 +81,28 @@ public class TerminalInput {
 
     public static TerminalInput fromArgs(String[] args) {
         if (args.length != 3) {
-            throw new IllegalArgumentException("Użycie: java App <rootpath> <reportType> <YYYY-MM>");
+            throw new IllegalArgumentException("Użycie: java App <rootpath> <reportType> <YYYY-MM-DD>");
         }
         String rootPath = args[0];
         String arg1 = args[1];
-        ReportType reportType;
-        switch (arg1) {
-            case "employees":
-                reportType = ReportType.employees;
-                break;
-            case "projects":
-                reportType = ReportType.projects;
-                break;
-            default:
-                reportType = ReportType.error;
-                System.out.println("Zły typ raportu. Podaj typ raportu - employees lub projects ");
+        ReportType reportType = ReportType.error;
+        boolean isReportTypeCorrect = false;
+        while (!isReportTypeCorrect) {
+            switch (arg1) {
+                case "employees":
+                    reportType = ReportType.employees;
+                    isReportTypeCorrect = true;
+                    break;
+                case "projects":
+                    reportType = ReportType.projects;
+                    isReportTypeCorrect = true;
+                    break;
+                default:
+                    reportType = ReportType.error;
+                    System.out.println("Zły typ raportu. Podaj typ raportu - employees lub projects ");
+                    isReportTypeCorrect = false;
+                    break;
+            }
         }
 
         YearMonth ym;
