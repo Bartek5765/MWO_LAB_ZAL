@@ -1,5 +1,6 @@
 package org.example;
 
 public interface IReport {
-    public float sumHours();
+    public void sumHours();
+    public String getReportString();
 }

@@ -2,10 +2,13 @@ package org.example;
 
 public class ReportEmployee implements IReport {
 
-    public ReportEmployee() {
+    public ReportEmployee(Employee employee) {
     }
 
-    public float sumHours() {
-        return 0;
+    public void sumHours() {
+    }
+
+    public String getReportString() {
+        return null;
     }
 }
