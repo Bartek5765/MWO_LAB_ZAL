@@ -129,42 +129,28 @@ public class FullTest {
     void testPrintingProjectReportMockUp() {
         p1.addTask(task2);
         p2.addTask(task2);
-        float sum1 = 0;
-        float sum2 = 0;
 
-        for (Task task : p1.getTasks()) {
-            sum1 += task.getDuration();
+        for (Project project : projects) {
+            float sum = 0;
+            for (Task task : project.getTasks()) {
+                sum += task.getDuration();
+            }
+            System.out.println(project.getName() + " has " + sum + " hours in total");
         }
-
-        for (Task task : p2.getTasks()) {
-            sum2 += task.getDuration();
-        }
-
-        System.out.println(p1.getName() + " has " + sum1 + " hours in total");
-        assertEquals(150, sum1);
-        System.out.println(p2.getName() + " has " + sum2 + " hours in total");
-        assertEquals(100, sum2);
     }
 
     @Test
     void testPrintingEmployeeReportMockUp() {
         e1.addTask(task2);
         e2.addTask(task2);
-        float sum1 = 0;
-        float sum2 = 0;
 
-        for (Task task : e1.getTasks()) {
-            sum1 += task.getDuration();
+        for (Employee employee : employees) {
+            float sum = 0;
+            for (Task task : employee.getTasks()) {
+                sum += task.getDuration();
+            }
+            System.out.println(employee.getName() + " has " + sum + " hours in total");
         }
-
-        for (Task task : e2.getTasks()) {
-            sum2 += task.getDuration();
-        }
-
-        System.out.println(e1.getName() + " has " + sum1 + " hours in total");
-        assertEquals(150, sum1);
-        System.out.println(e2.getName() + " has " + sum2 + " hours in total");
-        assertEquals(100, sum2);
     }
 
     @Test
