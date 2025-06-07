@@ -3,11 +3,14 @@ package org.example;
 import java.time.LocalDate;
 
 public class Task {
-    private final Employee employee;
-    private final Project project;
-    private final LocalDate date;
-    private final String name;
-    private final float duration;
+    public String projectName;
+    public String taskName;
+    private Employee employee;
+    private  Project project;
+    private  LocalDate date;
+    private  String name;
+    private  float duration;
+    public String employeeName;
 
     public Task(Employee employee, Project project, LocalDate date, String name, float duration) {
         this.employee = employee;
@@ -15,6 +18,9 @@ public class Task {
         this.date = date;
         this.name = name;
         this.duration = duration;
+    }
+
+    public Task(LocalDate date, String taskName, float duration) {
     }
 
     public Employee getEmployee() {
