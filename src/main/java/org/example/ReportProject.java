@@ -19,6 +19,16 @@ public class ReportProject implements IReport {
         return String.format("%.2f", sumOfHours);
     }
 
+    public String getSumOfEmployeeHours(Project project, Employee employee) {
+        float sumOfHours = 0;
+        for (Task task : employee.getTasks()) {
+            if (task.getProject().getName().equals(project.getName())) {
+                sumOfHours += task.getDuration();
+            }
+        }
+        return String.format("%.2f", sumOfHours);
+    }
+
     public String getName() {
         return "Employee Report";
     }
@@ -28,6 +38,13 @@ public class ReportProject implements IReport {
         for (Project project : projects) {
             sb.append(project.getName()).append("\t");
             sb.append(getStringSumOfHours(project)).append("\n");
+            sb.append(">>>>\n");
+            sb.append("Project Employees: \n");
+            for (Employee employee : project.getEmployees()) {
+                sb.append("\t").append(employee.getName()).append("\t");
+                sb.append(getSumOfEmployeeHours(project, employee)).append("\n");
+            }
+            sb.append("<<<<\n");
         }
         return sb.toString();
     }
