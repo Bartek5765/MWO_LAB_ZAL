@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="16b27483-1a97-41df-aff0-3decda8d7266" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/src/main/java/org/example/IReport.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/src/main/java/org/example/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/src/main/java/org/example/ReportEmployee.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MWO_LAB_ZAL/src/main/java/org/example/ReportProject.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/IReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zajackrzysztof00&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Bartek5765/MWO_LAB_ZAL.git&quot;,
+    &quot;accountId&quot;: &quot;5f27254e-666e-440f-9d20-7ac7c83adfdc&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -30,16 +49,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Reports",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/var/home/student/IdeaProjects/MWO_LAB_ZAL/MWO_LAB_ZAL",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="MWO_LAB_ZAL1" />
@@ -70,6 +90,9 @@
       <option name="presentableId" value="Default" />
       <updated>1749290960740</updated>
       <workItem from="1749290961791" duration="45000" />
+      <workItem from="1749291382509" duration="9000" />
+      <workItem from="1749291398716" duration="34000" />
+      <workItem from="1749292988014" duration="76000" />
     </task>
     <servers />
   </component>
