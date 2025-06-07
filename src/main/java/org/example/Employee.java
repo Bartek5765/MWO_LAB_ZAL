@@ -1,16 +1,18 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Employee {
     public final ArrayList<Task> tasks;
-    public final ArrayList<Project> projects;
+    public final Set<Project> projects;
     public final String name;
 
     public Employee(String name) {
         this.tasks = new ArrayList<>();
-        this.projects = new ArrayList<>();
+        this.projects = new HashSet<>();
         this.name = name;
     }
 
@@ -30,7 +32,7 @@ public class Employee {
         return this.tasks;
     }
 
-    public ArrayList<Project> getProjects() {
+    public Set<Project> getProjects() {
         return this.projects;
     }
 
