@@ -1,18 +1,16 @@
 package org.example;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Project {
     private final String name;
     private final Set<Employee> employees;
-    private final Set<Task> tasks;
+    private final List<Task> tasks;
 
     public Project(String name) {
         this.name = name;
         this.employees = new HashSet<>();
-        this.tasks = new HashSet<>();
+        this.tasks = new ArrayList<>();
     }
 
     public String getName() {
@@ -23,7 +21,7 @@ public class Project {
         return employees;
     }
 
-    public Set<Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
