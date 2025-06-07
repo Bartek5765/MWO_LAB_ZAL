@@ -9,6 +9,7 @@
    - RAPORT Z PROJEKTAMI
        - nazwa projektu --- liczba godzin
        - rozbudowa: pracownik --- liczba godzin
-3. Obsługa błędów --> dzisiaj Wystąpił błąd
+3. Obsługa błędów --> Wystąpił błąd
 4. Date from to
----KONIEC dzisiaj
+---KONIEC ---
+Podsumowanie co możemy zrobić jutro
