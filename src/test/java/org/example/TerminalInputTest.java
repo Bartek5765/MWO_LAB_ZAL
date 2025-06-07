@@ -3,6 +3,7 @@ package org.example;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.YearMonth;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +13,7 @@ public class TerminalInputTest {
     @Test
     public void testConstructorAndGetters() {
         ReportType reportType = ReportType.employees;
-        YearMonth date = YearMonth.of(2024, 5);
+        LocalDate date = LocalDate.of(2024, 5, 20);
         String rootPath = "/path/to/root";
 
         TerminalInput input = new TerminalInput(reportType, date, rootPath);
