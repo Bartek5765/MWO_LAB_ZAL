@@ -7,14 +7,18 @@ import java.util.Set;
 public class App {
     public final ArrayList<Task> tasks;
     public final Set<Employee> employees;
-//    TerminalInput input;
+    TerminalInput input;
     public final Set<Project> projects;
-    public final ReportType reportType;
+//    public final ReportType reportType;
 
-    public App(ReportType reportType) {
+    public App() {
         tasks = new ArrayList<>();
         employees = new HashSet<>();
         projects = new HashSet<>();
-        this.reportType = reportType;
+    }
+
+    public void run() {
+        TerminalInput input = new TerminalInput();
+        input.readFromConsole();
     }
 }
