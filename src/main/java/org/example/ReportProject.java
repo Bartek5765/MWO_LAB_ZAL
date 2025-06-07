@@ -1,13 +1,11 @@
 package org.example;
-
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Set;
 
 public class ReportProject implements IReport {
 
-    HashSet<Project> projects;
+    Set<Project> projects;
 
-    public ReportProject(HashSet<Project> projects) {
+    public ReportProject(Set<Project> projects) {
         this.projects = projects;
     }
 

@@ -1,12 +1,11 @@
 package org.example;
-
-import java.util.HashSet;
+import java.util.Set;
 
 public class ReportEmployee implements IReport {
 
-    HashSet<Employee> employees;
+    Set<Employee> employees;
 
-    public ReportEmployee(HashSet<Employee> employees) {
+    public ReportEmployee(Set<Employee> employees) {
         this.employees = employees;
     }
 
