@@ -8,3 +8,7 @@
      - imie nazwisko --- liczba godzin
    - RAPORT Z PROJEKTAMI
        - nazwa projektu --- liczba godzin
+       - rozbudowa: pracownik --- liczba godzin
+3. Obsługa błędów --> dzisiaj Wystąpił błąd
+4. Date from to
+---KONIEC dzisiaj
