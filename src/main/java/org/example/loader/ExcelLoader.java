@@ -146,7 +146,7 @@ public class ExcelLoader {
     public LoadResult loadDataFromFile(String filePath) throws IOException, ExcelLoadException {
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new HSSFWorkbook(fis)) {
-
+            String fileName = filePath.substring(filePath.lastIndexOf('/')+1);
 
             FilePathInfo pathInfo = new FilePathInfo(filePath);
 
@@ -167,20 +167,20 @@ public class ExcelLoader {
                 Project project = getOrCreateProject(projectName);
 
                 if (sheet.getLastRowNum() < 0) {
-                    System.out.println("⚠ Arkusz " + sheet.getSheetName() + " jest pusty - pomijam");
+                    System.out.println("⚠ Plik " + fileName + " arkusz " + sheet.getSheetName() + " jest pusty - pomijam");
                     continue;
                 }
 
                 Row headerRow = sheet.getRow(0);
                 if (headerRow == null || isEmptyRow(headerRow)) {
-                    System.out.println("⚠ Arkusz " + sheet.getSheetName() + " nie ma nagłówków - pomijam");
+                    System.out.println("⚠ Plik " + fileName + " arkusz " + sheet.getSheetName() + " nie ma nagłówków - pomijam");
                     continue;
                 }
 
                 try {
                     validateHeaders(headerRow);
                 } catch (ExcelLoadException e) {
-                    System.out.println("⚠ Błędne nagłówki w arkuszu " + sheet.getSheetName() + ": " + e.getMessage());
+                    System.out.println("⚠ Plik " + fileName +  " błędne nagłówki w arkuszu " + sheet.getSheetName() + ": " + e.getMessage());
                 }
 
                 int validTasksInSheet = 0;
@@ -193,7 +193,7 @@ public class ExcelLoader {
                     }
 
                     try {
-                        Task taskData = parseRowSafe(row, i + 1, sheet.getSheetName());
+                        Task taskData = parseRowSafe(row, i + 1, sheet.getSheetName(), fileName);
 
                         if (taskData != null) {
                             Task task = new Task(employee, project, taskData.getDate(),
@@ -262,35 +262,35 @@ public class ExcelLoader {
     }
 
 
-    private Task parseRowSafe(Row row, int rowNumber, String sheetName) {
+    private Task parseRowSafe(Row row, int rowNumber, String sheetName, String fileName) {
         try {
             if (row.getLastCellNum() < 3) {
                 return null;
             }
 
-            LocalDate date = getCellValueAsDateSafe(row.getCell(0));
-            String taskName = getCellValueAsStringSafe(row.getCell(1));
-            Float duration = getCellValueAsFloatSafe(row.getCell(2));
+            LocalDate date = getCellValueAsDateSafe(row.getCell(0), fileName, sheetName, rowNumber);
+            String taskName = getCellValueAsStringSafe(row.getCell(1), fileName, sheetName, rowNumber);
+            Float duration = getCellValueAsFloatSafe(row.getCell(2), fileName, sheetName, rowNumber);
 
             if (taskName == null || taskName.trim().isEmpty()) {
-                System.out.println("⚠ Wiersz " + rowNumber + ": pusta nazwa zadania - pomijam");
+                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": pusta nazwa zadania - pomijam");
                 return null;
             }
 
             if (date == null) {
-                System.out.println("⚠ Wiersz " + rowNumber + ": nieprawidłowa data - pomijam");
+                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nieprawidłowa data - pomijam");
                 return null;
             }
 
             if (duration == null || duration <= 0) {
-                System.out.println("⚠ Wiersz " + rowNumber + ": nieprawidłowy czas (" + duration + ") - pomijam");
+                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nieprawidłowy czas (" + duration + ") - pomijam");
                 return null;
             }
 
             return new Task(date, taskName.trim(), duration);
 
         } catch (Exception e) {
-            System.out.println("⚠ Błąd parsowania wiersza " + rowNumber + ": " + e.getMessage());
+            System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " błąd parsowania wiersza " + rowNumber + ": " + e.getMessage());
             return null;
         }
     }
@@ -303,14 +303,14 @@ public class ExcelLoader {
 
         for (int i = 0; i < lastCellNum; i++) {
             Cell cell = row.getCell(i);
-            String cellValue = getCellValueAsStringSafe(cell);
+            String cellValue = getCellValueAsStringSafe(cell, "", "", 0);
             if (cellValue != null && !cellValue.trim().isEmpty()) {
                 return false;
             }
         }
         return true;
     }
-    private String getCellValueAsStringSafe(Cell cell) {
+    private String getCellValueAsStringSafe(Cell cell, String fileName, String sheetName, int rowNumber) {
         if (cell == null) return "";
 
         try {
@@ -340,7 +340,7 @@ public class ExcelLoader {
                 default -> "";
             };
         } catch (Exception e) {
-            System.out.println("⚠ Błąd odczytu komórki jako tekst: " + e.getMessage());
+            System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + " błąd odczytu komórki jako tekst: " + e.getMessage());
             return "";
         }
     }
@@ -357,7 +357,7 @@ public class ExcelLoader {
         };
     }
 
-    private LocalDate getCellValueAsDateSafe(Cell cell) {
+    private LocalDate getCellValueAsDateSafe(Cell cell, String fileName, String sheetName, int rowNumber) {
         if (cell == null) return null;
 
         try {
@@ -374,14 +374,14 @@ public class ExcelLoader {
             }
 
         } catch (Exception e) {
-            System.out.println("⚠ Błąd parsowania daty w komórce: " + e.getMessage());
+            System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + "błąd parsowania daty w komórce: " + e.getMessage());
         }
 
         return null;
     }
 
 
-    private Float getCellValueAsFloatSafe(Cell cell) {
+    private Float getCellValueAsFloatSafe(Cell cell, String fileName, String sheetName, int rowNumber) {
         if (cell == null) return null;
 
         try {
@@ -396,7 +396,7 @@ public class ExcelLoader {
                         strValue = strValue.replace(",", ".");
                         yield Float.parseFloat(strValue);
                     } catch (NumberFormatException e) {
-                        System.out.println("⚠ Nie można sparsować '" + strValue + "' jako liczba");
+                        System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nie można sparsować '" + strValue + "' jako liczba");
                         yield null;
                     }
                 }
@@ -410,7 +410,7 @@ public class ExcelLoader {
                 default -> null;
             };
         } catch (Exception e) {
-            System.out.println("⚠ Błąd odczytu komórki jako liczba: " + e.getMessage());
+            System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + " błąd odczytu komórki jako liczba: " + e.getMessage());
             return null;
         }
     }
