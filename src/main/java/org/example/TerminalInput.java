@@ -46,7 +46,7 @@ public class TerminalInput {
                 reportType = ReportType.valueOf(args.getOptionValue("r"));
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(
-                        "Nieznany typ raportu: " + args.getOptionValue("r") + ". Dostępne: employees, projects", e);
+                        "Nieznany typ raportu: " + args.getOptionValue("r") + ". Dostępne: employees, projects, top", e);
             }
         }
 
