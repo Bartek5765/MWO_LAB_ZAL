@@ -77,16 +77,15 @@ java -jar report.jar -r top -p ../sample-data/Projekt1/2022 -df 2028-09-09
 
 ### Częste błedy:
 
+!Daty muszą być w formacie RRRR-MM-DD!
 ```
 -r projects -p ../sample-data -df 2000-01-01 -dt 2022/01/01
 ```
-!Daty muszą być w formacie RRRR-MM-DD!
 
+!Data początkowa nie może być po dacie końcowej!
 ```
 -r projects -p ../sample-data -df 2023-01-01 -dt 2022-01-01
 ```
-
-!Data początkowa nie może być po dacie końcowej!
 
 
 
