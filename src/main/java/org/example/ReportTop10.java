@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class ReportTop10 extends ReportEmployee implements IReport {
 
+    String name;
     Set<Employee> top10Employees;
 
     public ReportTop10(Set<Employee> employees, int topNumber) {
@@ -45,11 +46,12 @@ public class ReportTop10 extends ReportEmployee implements IReport {
                 }
             }
         }
+        this.name = "Top " + topNumber + " employees";
     }
 
     @Override
     public String getName() {
-        return "Top 10 Employees";
+        return this.name;
     }
 
     @Override
