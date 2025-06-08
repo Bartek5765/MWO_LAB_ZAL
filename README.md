@@ -27,11 +27,13 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
 
 Aby wygenerować raport, użyj poniższych opcji w terminalu:
 
-
+PARAMETRY WYMAGANE:
 rodzaj raportu: -r <employees|projects|top> 
 ścieżka katalogu: -p <ścieżka_katalogu> 
+
+PARAMETRY OPCJONALNE:
 data od: -df <RRRR-MM-DD> 
-data do: -dt <RRRR-MM-DD>"
+data do: -dt <RRRR-MM-DD>
 
 
 dla raportu top, możliwość określenia ilości pracowników poprzez podanie wartości liczbowej, 
