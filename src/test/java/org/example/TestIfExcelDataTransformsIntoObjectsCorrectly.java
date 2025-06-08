@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,12 +32,9 @@ public class TestIfExcelDataTransformsIntoObjectsCorrectly {
         this.employees = new HashSet<>();
         this.projects = new HashSet<>();
 
-        String simulatePath = "employees\n2000-01-01\n/var/home/student/IdeaProjects/MWO_LAB_ZAL/sample-data/Projekt2/2023\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(simulatePath.getBytes());
-        System.setIn(in);
-
         TerminalInput input = new TerminalInput();
-        input = input.readFromConsole();
+        String[] args = {"employees", "/var/home/student/IdeaProjects/MWO_LAB_ZAL/sample-data/Projekt2/2023/02", "2000-01"};
+        input.fromArgs(args);
         ExcelLoader excelLoader = new ExcelLoader();
         excelLoader.setDirectoryPath(input.getRootPath());
         ExcelLoader.LoadResult result = excelLoader.loadAllData();
@@ -56,7 +54,7 @@ public class TestIfExcelDataTransformsIntoObjectsCorrectly {
 
         assertEquals(2, this.projects.size());
         assertEquals(1, this.employees.size());
-        assertEquals(17, this.tasks.size());
+        assertEquals(9, this.tasks.size());
     }
 
     @Test
@@ -65,22 +63,22 @@ public class TestIfExcelDataTransformsIntoObjectsCorrectly {
         this.employees = new HashSet<>();
         this.projects = new HashSet<>();
 
-        String simulatePath = "employees\n2012-01-17\n/var/home/student/IdeaProjects/MWO_LAB_ZAL/sample-data/Projekt2/2023/02\n";
-        ByteArrayInputStream in = new ByteArrayInputStream(simulatePath.getBytes());
-        System.setIn(in);
-
         TerminalInput input = new TerminalInput();
-        input = input.readFromConsole();
+        String[] args = {"employees", "/var/home/student/IdeaProjects/MWO_LAB_ZAL/sample-data/Projekt2/2023/02", "2023-02"};
+        input.fromArgs(args);
         ExcelLoader excelLoader = new ExcelLoader();
         excelLoader.setDirectoryPath(input.getRootPath());
         ExcelLoader.LoadResult result = excelLoader.loadAllData();
         this.employees.addAll(result.getEmployees());
         this.projects.addAll(result.getProjects());
         this.tasks.addAll(result.getTasks());
+        Filter filter = new Filter();
+        tasks = filter.filterTasksByData(tasks, LocalDate.of(2023, 2, 1), LocalDate.of(2023, 2, 28));
+
 
         assertEquals(2, this.projects.size());
         assertEquals(1, this.employees.size());
-        assertEquals(6, this.tasks.size());
+        assertEquals(3, this.tasks.size());
     }
 
 
