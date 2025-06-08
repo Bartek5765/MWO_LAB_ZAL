@@ -6,18 +6,18 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
 ## Dostępne opcje raportów:
 
 1. **Report:Employee Report (raport po pracownikach)**
-   Funkcojalności raportu:
-      - listę pracowników z sumą godzin wypracowaną w projekcie.
+Funkcojalności raportu:
+      - lista pracowników z sumą godzin wypracowaną w projekcie.
         
 3. **Report:Projects Report (raport po projektach)**
     Funkcojalności raportu:
-   - listę projektów z sumą wypracowanych godzin;
-   - listę pracowników uczestniczących w projekcie;
-   - liczbę godzin przepracowanych przez danego pracownika w projekcie;
+   - lista projektów z sumą wypracowanych godzin;
+   - lista pracowników uczestniczących w projekcie;
+   - liczba godzin przepracowanych przez danego pracownika w projekcie;
    - procentowy udział godzinowy pracownika odniesiony do godzin z całego projektu.
   
 5. **Report:TOP (raport po pracownikach)**
-      - listę pracowników z sumą godzin wypracowaną w projekcie.
+      - lista "najlepszych" pracowników z sumą godzin wypracowaną w projektach.
 
 ## Instrukcja generowania raportu
 
