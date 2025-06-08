@@ -273,17 +273,17 @@ public class ExcelLoader {
             Float duration = getCellValueAsFloatSafe(row.getCell(2), fileName, sheetName, rowNumber);
 
             if (taskName == null || taskName.trim().isEmpty()) {
-                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": pusta nazwa zadania - pomijam");
+                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": pusta nazwa zadania");
                 return null;
             }
 
             if (date == null) {
-                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nieprawidłowa data - pomijam");
+                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nieprawidłowa data");
                 return null;
             }
 
             if (duration == null || duration <= 0) {
-                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nieprawidłowy czas (" + duration + ") - pomijam");
+                System.out.println("⚠ Plik " + fileName +  " arkusz " + sheetName + " wiersz " + rowNumber + ": nieprawidłowy czas (" + duration + ") ");
                 return null;
             }
 
