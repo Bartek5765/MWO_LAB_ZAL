@@ -23,13 +23,22 @@ public class Filter {
             for (Employee employee : project.getEmployees()) {
                 Employee newEmployee = new Employee(employee.getName());
                 for (Task task : employee.getTasks()) {
-                    if (task.getDate().isAfter(fromDate) && task.getDate().isBefore(toDate)) {
+                    if (task.getDate().isAfter(fromDate) && task.getDate().isBefore(toDate) && task.getProject().equals(project)) {
                         newEmployee.addTask(task);
                     }
                 }
-                newProject.addEmployee(newEmployee);
+                if (newEmployee.getTasks().isEmpty()) {
+                    continue;
+                } else {
+                    newProject.addEmployee(newEmployee);
+                }
             }
-            filteredProjects.add(newProject);
+            if (newProject.getTasks().isEmpty() && newProject.getEmployees().isEmpty()) {
+                continue;
+            } else {
+                filteredProjects.add(newProject);
+            }
+
         }
         return filteredProjects;
     }
@@ -50,9 +59,17 @@ public class Filter {
                         newProject.addTask(task);
                     }
                 }
-                newEmployee.addProject(newProject);
+                if (newProject.getTasks().isEmpty()) {
+                    continue;
+                } else {
+                    newEmployee.addProject(newProject);
+                }
             }
-            filteredProjects.add(newEmployee);
+            if (newEmployee.getTasks().isEmpty() && newEmployee.getProjects().isEmpty()) {
+                continue;
+            } else {
+                filteredProjects.add(newEmployee);
+            }
         }
         return filteredProjects;
     }
