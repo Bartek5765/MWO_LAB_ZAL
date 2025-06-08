@@ -1,5 +1,9 @@
 package org.example;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.ParseException;
 import org.example.loader.ExcelLoader;
 
 import java.util.ArrayList;
@@ -22,7 +26,9 @@ private final ExcelLoader excelLoader;
         projects = new HashSet<>();
         this.excelLoader = new ExcelLoader();
         this.input = new TerminalInput();
-        this.input.fromArgs(args);
+        CliOptions cliOptions = new CliOptions();
+        CommandLine lines = cliOptions.parse(args);
+        this.input.fromArgs(lines);
         run();
     }
 

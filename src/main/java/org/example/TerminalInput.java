@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.commons.cli.CommandLine;
+
 import java.time.YearMonth;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,70 +10,69 @@ import java.time.format.DateTimeParseException;
 
  // Klasa odpowiadająca za parsowanie parametrów wejściowych programu.
  // Użycie:
- // java -jar raport.jar <reportType> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>
+ // java -jar raport.jar -r <reportType> -p <ścieżka_katalogu> -df <RRRR-MM-DD> -dt <RRRR-MM-DD>
 
 public class TerminalInput {
     private ReportType reportType;
     private String rootPath;
-//    private final YearMonth period;
     private LocalDate fromDate;
     private LocalDate toDate;
 
-    // Formatter dla okresu (rok-miesiąc)
-//    private static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
-    // Formatter dla zakresu dat (rok-miesiąc-dzień)
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public TerminalInput() {}
 
     private TerminalInput(ReportType reportType,
                           String rootPath,
-//                          YearMonth period,
                           LocalDate fromDate,
                           LocalDate toDate) {
         this.reportType = reportType;
         this.rootPath = rootPath;
-//        this.period = period;
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
 
-     // Tworzymy instancję TerminalInput na podstawie argumentów przekazanych do programu.
-     // @param args tablica argumentów
-     // @return obiekt z sparsowanymi parametrami
-     // @throws IllegalArgumentException w przypadku niepoprawnych parametrów
+    public void fromArgs(CommandLine args) {
 
-    public void fromArgs(String[] args) {
-        if (args == null || args.length < 3) {
+        if (args == null ) {
             throw new IllegalArgumentException(
                     "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>");
         }
-        // Parsowanie typu raportu
-        ReportType rt;
-        try {
-            rt = ReportType.valueOf(args[0]);//.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(
-                    "Nieznany typ raportu: " + args[0] + ". Dostępne: EMPLOYEES, PROJECTS", e);
+        reportType = null;
+        if (args.hasOption("r")) {
+
+            try {
+                reportType = ReportType.valueOf(args.getOptionValue("r"));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(
+                        "Nieznany typ raportu: " + args.getOptionValue("r") + ". Dostępne: employees, projects", e);
+            }
         }
-        // Ścieżka do katalogu z plikami
-        String rootPath = args[1];
 
-//        // Parsowanie okresu (rok-miesiąc)
-//        YearMonth ym;
-//        try {
-//            ym = YearMonth.parse(args[2], YM_FORMATTER);
-//        } catch (DateTimeParseException e) {
-//            throw new IllegalArgumentException("Okres musi być w formacie RRRR-MM", e);
-//        }
-
-        // Opcjonalny zakres dat od-do
+        rootPath = null;
+        if (args.hasOption("p")) {
+            rootPath = args.getOptionValue("p");
+            try {
+                rootPath = args.getOptionValue("p");
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(e);
+            }
+            if (rootPath == null || rootPath.isEmpty()) {
+                throw new IllegalArgumentException("Parametr ścieżki jest wymagany");
+            }
+        }
         LocalDate fromDate = null;
         LocalDate toDate = null;
-        if (args.length <= 4) {
+
+        if (args.hasOption("df")) {
+            fromDate = LocalDate.parse(args.getOptionValue("df"), DATE_FORMATTER);
+        }
+        if (args.hasOption("dt")) {
+            toDate = LocalDate.parse(args.getOptionValue("dt"), DATE_FORMATTER);
+        }
             try {
-                fromDate = LocalDate.parse(args[2], DATE_FORMATTER);
-                toDate = LocalDate.parse(args[3], DATE_FORMATTER);
+                fromDate = LocalDate.parse(args.getOptionValue("df"), DATE_FORMATTER);
+                toDate = LocalDate.parse(args.getOptionValue("dt"), DATE_FORMATTER);
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException(
                         "Daty muszą być w formacie RRRR-MM-DD", e);
@@ -80,11 +81,12 @@ public class TerminalInput {
                 throw new IllegalArgumentException(
                         "Data początkowa nie może być po dacie końcowej");
             }
-        }
 
-//        return new TerminalInput(rt, rootPath, ym, fromDate, toDate);
+            if (args.getOptionValue("df") == null || args.getOptionValue("dt") == null) {
+                throw new IllegalArgumentException("muszą być podane obie daty");
+            }
 
-        this.reportType = rt;
+        this.reportType = reportType;
         this.rootPath = rootPath;
         this.fromDate = fromDate;
         this.toDate = toDate;
