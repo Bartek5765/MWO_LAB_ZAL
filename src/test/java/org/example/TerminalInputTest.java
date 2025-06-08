@@ -2,54 +2,62 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Path;
 import java.time.YearMonth;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TerminalInputTest {
+
+
+class TerminalInputTest {
 
     @Test
-    public void testConstructorAndGetters() {
-        ReportType reportType = ReportType.employees;
-        YearMonth date = YearMonth.of(2024, 5);
-        String rootPath = "/path/to/root";
+    void testFromArgsValidEmployeesInput() {
+        String[] args = {"C:/reports", "employees", "2023-04-01"};
+        TerminalInput input = TerminalInput.fromArgs(args);
 
-        TerminalInput input = new TerminalInput(reportType, date, rootPath);
-
-        assertEquals(reportType, input.getReportType());
-        assertEquals(date, input.getDate());
-        assertEquals(rootPath, input.getRootPath());
+        assertEquals("C:/reports", input.getRootPath());
+        assertEquals(ReportType.employees, input.getReportType());
+        assertEquals(YearMonth.of(2023, 4), input.getDate());
     }
-//
-//    @Test
-//    public void testFromArgsValidInput() {
-//        String[] args = {ReportType.projects, "2023-11", "/some/path"};
-//
-//        TerminalInput input = TerminalInput.fromArgs(args);
-//
-//        assertEquals("PROJECT", input.getReportType());
-//        assertEquals(YearMonth.of(2023, 11), input.getDate());
-//        assertEquals(Path.of("/some/path"), input.getRootPath());
-//    }
 
-//    @Test
-//    public void testFromArgsInvalidArgsLength() {
-//        String[] args = {ReportType.employees, "2023-05"};
-//        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-//            TerminalInput.fromArgs(args);
-//        });
-//
-//        assertTrue(exception.getMessage().contains("Użycie"));
-//    }
+    @Test
+    void testFromArgsValidProjectsInput() {
+        String[] args = {"/home/user", "projects", "2022-12-01"};
+        TerminalInput input = TerminalInput.fromArgs(args);
 
-//    @Test
-//    public void testFromArgsInvalidDateFormat() {
-//        String[] args = {"PROJECT", "2023/05", "/some/path"};
-//        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-//            TerminalInput.fromArgs(args);
-//        });
-//
-//        assertTrue(exception.getMessage().contains("Data musi być w formacie RRRR-MM"));
-//    }
+        assertEquals("/home/user", input.getRootPath());
+        assertEquals(ReportType.projects, input.getReportType());
+        assertEquals(YearMonth.of(2022, 12), input.getDate());
+    }
+
+    @Test
+    void testFromArgsInvalidArgumentLength() {
+        String[] args = {"C:/data", "employees"};
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            TerminalInput.fromArgs(args);
+        });
+
+        assertEquals("Użycie: java App <rootpath> <reportType> <YYYY-MM-DD>", exception.getMessage());
+    }
+
+    @Test
+    void testFromArgsInvalidReportType() {
+        String[] args = {"C:/data", "invalidType", "2023-01-01"};
+
+
+        TerminalInput input = TerminalInput.fromArgs(args);
+        assertEquals(ReportType.error, input.getReportType());
+    }
+
+    @Test
+    void testFromArgsInvalidDateFormat() {
+        String[] args = {"C:/data", "employees", "2023/01/01"};
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            TerminalInput.fromArgs(args);
+        });
+
+        assertTrue(exception.getMessage().contains("Data musi być w formacie RRRR-MM"));
+    }
 }

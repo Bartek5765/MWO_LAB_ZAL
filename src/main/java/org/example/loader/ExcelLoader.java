@@ -54,7 +54,6 @@ public class ExcelLoader {
     }
 
 
-    //      Ładuje dane ze wszystkich plików Excel w katalogu
     public LoadResult loadAllData() throws IOException, ExcelLoadException {
         if (directoryPath == null || directoryPath.trim().isEmpty()) {
             throw new ExcelLoadException("Ścieżka do katalogu nie może być pusta");
@@ -68,7 +67,6 @@ public class ExcelLoader {
             throw new ExcelLoadException("Nie znaleziono plików Excel w katalogu: " + directoryPath);
         }
 
-        System.out.println("Znaleziono " + excelFiles.size() + " plików Excel");
 
         Set<Employee> allEmployees = new HashSet<>();
         Set<Project> allProjects = new HashSet<>();
@@ -77,32 +75,24 @@ public class ExcelLoader {
 
         for (String filePath : excelFiles) {
             try {
-                System.out.println("Przetwarzanie pliku: " + filePath);
                 LoadResult result = loadDataFromFile(filePath);
 
                 allEmployees.addAll(result.getEmployees());
                 allProjects.addAll(result.getProjects());
                 allTasks.addAll(result.getTasks());
 
-                System.out.println("✓ Pomyślnie przetworzono plik: " + filePath +
-                        " (" + result.getTasks().size() + " zadań)");
-
             } catch (Exception e) {
                 String errorMsg = "Błąd w pliku " + filePath + ": " + e.getMessage();
                 processingErrors.add(errorMsg);
                 System.err.println("⚠ " + errorMsg);
-                // Kontynuuj z pozostałymi plikami zamiast przerywać
             }
         }
 
-        // Jeśli żaden plik się nie przetworzył pomyślnie
         if (allTasks.isEmpty() && !processingErrors.isEmpty()) {
             throw new ExcelLoadException("Nie udało się przetworzyć żadnego pliku. Błędy: " +
                     String.join("; ", processingErrors));
         }
 
-        System.out.println("🎉 Zakończono przetwarzanie. Łącznie: " +
-                allTasks.size() + " zadań z " + excelFiles.size() + " plików");
 
         if (!processingErrors.isEmpty()) {
             System.out.println("⚠ Wystąpiły błędy w " + processingErrors.size() + " plikach");
@@ -112,7 +102,6 @@ public class ExcelLoader {
     }
 
 
-    // Znajduje wszystkie pliki Excel w katalogu (rekurencyjnie lub nie)
     private List<String> findExcelFiles(String directoryPath) throws IOException {
         List<String> excelFiles = new ArrayList<>();
         Path dir = Paths.get(directoryPath);
@@ -125,7 +114,6 @@ public class ExcelLoader {
             throw new IOException("Podana ścieżka nie jest katalogiem: " + directoryPath);
         }
 
-        // Skanowanie tylko w głównym katalogu (bez rekurencji)
         try (Stream<Path> paths = Files.list(dir)) {
             paths.filter(Files::isRegularFile)
                     .filter(path -> isExcelFile(path.toString()))
@@ -136,7 +124,6 @@ public class ExcelLoader {
         return excelFiles;
     }
 
-    //Alternatywna metoda dla skanowania rekurencyjnego
     private List<String> findExcelFilesRecursive(String directoryPath) throws IOException {
         List<String> excelFiles = new ArrayList<>();
         Path dir = Paths.get(directoryPath);
@@ -151,7 +138,6 @@ public class ExcelLoader {
         return excelFiles;
     }
 
-    // Sprawdza czy plik jest plikiem Excel
     private boolean isExcelFile(String fileName) {
         String lowercaseName = fileName.toLowerCase();
         return lowercaseName.endsWith(".xls") || lowercaseName.endsWith(".xlsx");
@@ -161,11 +147,8 @@ public class ExcelLoader {
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new HSSFWorkbook(fis)) {
 
-            System.out.println("Workbook utworzony pomyślnie dla: " + filePath);
 
-            // NOWE: Użyj FilePathInfo
             FilePathInfo pathInfo = new FilePathInfo(filePath);
-            System.out.println("📁 " + pathInfo.toString());
 
             if (!pathInfo.hasValidStructure()) {
                 System.out.println("⚠ Nieprawidłowa struktura ścieżki: " + filePath);
@@ -176,21 +159,13 @@ public class ExcelLoader {
             List<Task> tasks = new ArrayList<>();
             List<String> skippedRows = new ArrayList<>(); // Tracking pominiętych wierszy
 
-            // ZMIANA: Użyj nazwy z pathInfo zamiast z pliku
             Employee employee = getOrCreateEmployee(pathInfo.getEmployeeName());
 
             for (Sheet sheet : workbook) {
-                // ZMIANA: Używaj nazwy projektu ze struktury folderów, nie z arkusza
-                String projectName = pathInfo.hasValidStructure() ?
-                        pathInfo.getProjectName() :
-                        sheet.getSheetName(); // fallback na nazwę arkusza
+                String projectName = sheet.getSheetName();
 
                 Project project = getOrCreateProject(projectName);
 
-                System.out.println("Przetwarzanie arkusza: " + sheet.getSheetName() +
-                        " dla projektu: " + projectName);
-
-                // Sprawdź czy arkusz ma jakiekolwiek dane
                 if (sheet.getLastRowNum() < 0) {
                     System.out.println("⚠ Arkusz " + sheet.getSheetName() + " jest pusty - pomijam");
                     continue;
@@ -202,21 +177,17 @@ public class ExcelLoader {
                     continue;
                 }
 
-                // Walidacja nagłówków - nie przerywaj jeśli błędne, tylko loguj
                 try {
                     validateHeaders(headerRow);
                 } catch (ExcelLoadException e) {
                     System.out.println("⚠ Błędne nagłówki w arkuszu " + sheet.getSheetName() + ": " + e.getMessage());
-                    // Kontynuuj - może dane są w innym formacie ale da się je odczytać
                 }
 
                 int validTasksInSheet = 0;
 
-                // Przetwarzaj wiersze danych (od wiersza 1)
                 for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                     Row row = sheet.getRow(i);
 
-                    // Pomiń całkowicie puste wiersze
                     if (row == null || isEmptyRow(row)) {
                         continue;
                     }
@@ -244,12 +215,8 @@ public class ExcelLoader {
                                 i + 1, sheet.getSheetName(), e.getMessage());
                         skippedRows.add(errorMsg);
                         System.out.println("⚠ Pomijam " + errorMsg);
-                        // Kontynuuj z następnym wierszem
                     }
                 }
-
-                System.out.println("✓ Arkusz '" + sheet.getSheetName() + "': " +
-                        validTasksInSheet + " prawidłowych zadań");
             }
 
             if (!skippedRows.isEmpty()) {
@@ -263,19 +230,16 @@ public class ExcelLoader {
         }
     }
 
-    // Pobiera lub tworzy pracownika z cache
     private Employee getOrCreateEmployee(String employeeName) {
         return employeeCache.computeIfAbsent(employeeName, Employee::new);
     }
 
-    // Pobiera lub tworzy projekt z cache
 
     private Project getOrCreateProject(String projectName) {
         return projectCache.computeIfAbsent(projectName, Project::new);
     }
 
 
-    // Pozostałe metody pomocnicze pozostają bez zmian
     private void validateHeaders(Row headerRow) throws ExcelLoadException {
         String[] expectedHeaders = {"data", "zadanie", "Czas [h]"};
 
@@ -298,12 +262,9 @@ public class ExcelLoader {
     }
 
 
-    // Bezpieczne parsowanie wiersza - nie rzuca wyjątków, zwraca null dla nieprawidłowych danych
     private Task parseRowSafe(Row row, int rowNumber, String sheetName) {
         try {
-            // Sprawdź czy wiersz ma wystarczająco komórek
             if (row.getLastCellNum() < 3) {
-                System.out.println("⚠ Wiersz " + rowNumber + " ma za mało komórek (< 3)");
                 return null;
             }
 
@@ -311,7 +272,6 @@ public class ExcelLoader {
             String taskName = getCellValueAsStringSafe(row.getCell(1));
             Float duration = getCellValueAsFloatSafe(row.getCell(2));
 
-            // Walidacja z elastycznością
             if (taskName == null || taskName.trim().isEmpty()) {
                 System.out.println("⚠ Wiersz " + rowNumber + ": pusta nazwa zadania - pomijam");
                 return null;
@@ -335,35 +295,9 @@ public class ExcelLoader {
         }
     }
 
-    private Task parseRow(Row row, int rowNumber) throws ExcelLoadException {
-        try {
-            LocalDate date = getCellValueAsDate(row.getCell(0));
-            String taskName = getCellValueAsString(row.getCell(1)).trim();
-            Float duration = getCellValueAsFloat(row.getCell(2));
-
-            if (taskName.isEmpty()) {
-                throw new ExcelLoadException("Nazwa zadania nie może być pusta");
-            }
-            if (date == null) {
-                throw new ExcelLoadException("Data nie może być pusta");
-            }
-            if (duration == null || duration <= 0) {
-                throw new ExcelLoadException("Czas trwania musi być liczbą większą od 0");
-            }
-
-            System.out.println(taskName + " " + date + " " + duration);
-
-            return new Task(date, taskName, duration);
-
-        } catch (Exception e) {
-            throw new ExcelLoadException("Błąd parsowania wiersza: " + e.getMessage());
-        }
-    }
-
     private boolean isEmptyRow(Row row) {
         if (row == null) return true;
 
-        // Sprawdź wszystkie komórki w wierszu (nie tylko pierwsze 5)
         int lastCellNum = row.getLastCellNum();
         if (lastCellNum <= 0) return true;
 
@@ -376,10 +310,6 @@ public class ExcelLoader {
         }
         return true;
     }
-
-
-    // Bezpieczna wersja getCellValueAsString - nigdy nie rzuca wyjątków
-
     private String getCellValueAsStringSafe(Cell cell) {
         if (cell == null) return "";
 
@@ -390,7 +320,6 @@ public class ExcelLoader {
                     if (DateUtil.isCellDateFormatted(cell)) {
                         yield cell.getDateCellValue().toString();
                     } else {
-                        // Sprawdź czy to liczba całkowita czy dziesiętna
                         double numValue = cell.getNumericCellValue();
                         if (numValue == (long) numValue) {
                             yield String.valueOf((long) numValue);
@@ -402,7 +331,6 @@ public class ExcelLoader {
                 case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
                 case FORMULA -> {
                     try {
-                        // Spróbuj pobrać obliczoną wartość formuły
                         yield cell.getStringCellValue();
                     } catch (Exception e) {
                         yield cell.getCellFormula();
@@ -429,8 +357,6 @@ public class ExcelLoader {
         };
     }
 
-    // Bezpieczna wersja getCellValueAsDate - nie rzuca wyjątków
-
     private LocalDate getCellValueAsDateSafe(Cell cell) {
         if (cell == null) return null;
 
@@ -440,13 +366,9 @@ public class ExcelLoader {
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate();
             }
-
-            // Spróbuj sparsować tekst jako datę
             if (cell.getCellType() == CellType.STRING) {
                 String dateStr = cell.getStringCellValue().trim();
                 if (!dateStr.isEmpty()) {
-                    // Można dodać parsowanie różnych formatów daty
-                    // Na razie zwracamy null dla tekstowych dat
                     return null;
                 }
             }
@@ -459,7 +381,6 @@ public class ExcelLoader {
     }
 
 
-    // Bezpieczna wersja getCellValueAsFloat - nie rzuca wyjątków
     private Float getCellValueAsFloatSafe(Cell cell) {
         if (cell == null) return null;
 
@@ -472,7 +393,6 @@ public class ExcelLoader {
                         yield null;
                     }
                     try {
-                        // Obsługa różnych formatów liczb (z przecinkiem, etc.)
                         strValue = strValue.replace(",", ".");
                         yield Float.parseFloat(strValue);
                     } catch (NumberFormatException e) {
@@ -482,7 +402,6 @@ public class ExcelLoader {
                 }
                 case FORMULA -> {
                     try {
-                        // Spróbuj pobrać obliczoną wartość liczbową formuły
                         yield (float) cell.getNumericCellValue();
                     } catch (Exception e) {
                         yield null;
@@ -496,36 +415,6 @@ public class ExcelLoader {
         }
     }
 
-    private LocalDate getCellValueAsDate(Cell cell) {
-        if (cell == null) return null;
-
-        if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
-            return cell.getDateCellValue().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-        }
-
-        return null;
-    }
-
-    private Float getCellValueAsFloat(Cell cell) {
-        if (cell == null) return null;
-
-        return switch (cell.getCellType()) {
-            case NUMERIC -> (float) cell.getNumericCellValue();
-            case STRING -> {
-                try {
-                    yield Float.parseFloat(cell.getStringCellValue());
-                } catch (NumberFormatException e) {
-                    yield null;
-                }
-            }
-            default -> null;
-        };
-    }
-
-
-    // Klasa pomocnicza do parsowania informacji ze ścieżki pliku
     private static class FilePathInfo {
         private final String projectName;
         private final String year;
@@ -537,14 +426,12 @@ public class ExcelLoader {
             this.fileName = new File(filePath).getName();
             this.employeeName = extractEmployeeNameFromFileName(fileName);
 
-            // Parsowanie ścieżki: sample-data/Projekt1/2022/01/Nowak_Adam.xls
             String[] pathParts = filePath.replace("\\", "/").split("/");
 
             String tempProject = null;
             String tempYear = null;
             String tempMonth = null;
 
-            // Szukaj wzorca: .../sample-data/ProjektX/YYYY/MM/...
             for (int i = 0; i < pathParts.length - 3; i++) {
                 if (pathParts[i].equals("sample-data") && i + 3 < pathParts.length) {
                     tempProject = pathParts[i + 1];  // Projekt1
@@ -560,18 +447,15 @@ public class ExcelLoader {
         }
 
         private String extractEmployeeNameFromFileName(String fileName) {
-            // Usuń rozszerzenie
             int lastDot = fileName.lastIndexOf('.');
             if (lastDot > 0) {
                 fileName = fileName.substring(0, lastDot);
             }
 
-            // Obsłuż pliki Error_*
             if (fileName.startsWith("Error_")) {
                 return fileName.substring(6); // "Error_Adam" -> "Adam"
             }
 
-            // Standardowe pliki: "Nowak_Adam" -> "Adam Nowak"
             if (fileName.contains("_")) {
                 String[] parts = fileName.split("_");
                 if (parts.length >= 2) {
@@ -600,7 +484,6 @@ public class ExcelLoader {
         }
     }
 
-    // LoadResult i ExcelLoadException z dodaniem informacji o błędach
     public static class LoadResult {
         private final Set<Employee> employees;
         private final Set<Project> projects;
@@ -617,9 +500,6 @@ public class ExcelLoader {
             this.tasks = tasks;
             this.processingErrors = processingErrors != null ? processingErrors : new ArrayList<>();
 
-            for (Task task : tasks) {
-                System.out.println(task.getName());
-            }
         }
 
         public Set<Employee> getEmployees() { return employees; }
@@ -635,7 +515,6 @@ public class ExcelLoader {
         public boolean hasErrors() { return !processingErrors.isEmpty(); }
 
 
-        // Zwraca podsumowanie do raportowania
         public String getSummary() {
             StringBuilder summary = new StringBuilder();
             summary.append(String.format("📊 Podsumowanie: %d zadań, %d pracowników, %d projektów",
@@ -648,7 +527,6 @@ public class ExcelLoader {
             return summary.toString();
         }
 
-        // Zwraca szczegółowy raport błędów
         public String getErrorReport() {
             if (processingErrors.isEmpty()) {
                 return "✅ Brak błędów podczas przetwarzania";
