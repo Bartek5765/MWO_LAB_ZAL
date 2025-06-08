@@ -17,6 +17,7 @@ public class TerminalInput {
     private String rootPath;
     private LocalDate fromDate;
     private LocalDate toDate;
+    private int topNumber = 10;
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -64,13 +65,9 @@ public class TerminalInput {
         LocalDate fromDate = null;
         LocalDate toDate = null;
 
-        if (!args.hasOption("df") || !args.hasOption("dt")) {
-            throw new IllegalArgumentException("muszą być podane obie daty");
-        }
-
             try {
-                fromDate = LocalDate.parse(args.getOptionValue("df"), DATE_FORMATTER);
-                toDate = LocalDate.parse(args.getOptionValue("dt"), DATE_FORMATTER);
+                fromDate = !args.hasOption("df") ? LocalDate.now().minusYears(100): LocalDate.parse(args.getOptionValue("df"), DATE_FORMATTER);
+                toDate = !args.hasOption("dt") ? LocalDate.now().plusYears(100) : LocalDate.parse(args.getOptionValue("dt"), DATE_FORMATTER);
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException(
                         "Daty muszą być w formacie RRRR-MM-DD", e);
@@ -79,13 +76,19 @@ public class TerminalInput {
                 throw new IllegalArgumentException(
                         "Data początkowa nie może być po dacie końcowej");
             }
-
+        if (args.hasOption("top")) {
+            this.topNumber = Integer.parseInt(args.getOptionValue("top"));
+        }
 
         this.reportType = reportType;
         this.rootPath = rootPath;
         this.fromDate = fromDate;
         this.toDate = toDate;
 
+    }
+
+    public int getTopNumber() {
+        return this.topNumber;
     }
 
     // Gettery
