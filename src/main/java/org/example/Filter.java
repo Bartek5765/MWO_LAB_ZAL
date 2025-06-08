@@ -6,8 +6,6 @@ import java.util.HashSet;
 
 public class Filter {
 
-
-
     public ArrayList<Task> filterTasksByData(ArrayList<Task> tasks, LocalDate fromDate, LocalDate toDate) {
         tasks.removeIf(task -> task.getDate().isBefore(fromDate) || task.getDate().isAfter(toDate));
         return tasks;

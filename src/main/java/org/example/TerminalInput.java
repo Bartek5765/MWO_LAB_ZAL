@@ -22,6 +22,8 @@ public class TerminalInput {
     // Formatter dla zakresu dat (rok-miesiąc-dzień)
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    public TerminalInput() {}
+
     private TerminalInput(ReportType reportType,
                           String rootPath,
 //                          YearMonth period,
@@ -47,7 +49,7 @@ public class TerminalInput {
         // Parsowanie typu raportu
         ReportType rt;
         try {
-            rt = ReportType.valueOf(args[0].toUpperCase());
+            rt = ReportType.valueOf(args[0]);//.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
                     "Nieznany typ raportu: " + args[0] + ". Dostępne: EMPLOYEES, PROJECTS", e);

@@ -16,25 +16,24 @@ private final ExcelLoader excelLoader;
     IReport report;
     ReportPrinter printer;
 
-
-    public App() throws Exception {
-        tasks = new ArrayList<Task>();
+    public App(String[] args) throws Exception {
+        tasks = new ArrayList<>();
         employees = new HashSet<>();
         projects = new HashSet<>();
         this.excelLoader = new ExcelLoader();
+        this.input = new TerminalInput();
+        this.input.fromArgs(args);
         run();
     }
 
     public void run() throws Exception {
-        TerminalInput input = new TerminalInput();
-        this.input = input.readFromConsole();
+
         excelLoader.setDirectoryPath(this.input.getRootPath());
 
         ExcelLoader.LoadResult result = excelLoader.loadAllData();
         this.employees = result.getEmployees();
         this.projects = result.getProjects();
         this.tasks = result.getTasks();
-
 
         switch (this.input.getReportType()) {
             case employees:
