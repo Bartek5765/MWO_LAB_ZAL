@@ -80,7 +80,7 @@ java -jar report.jar -r top -p /var/home/student/IdeaProjects/MWO_LAB_ZAL/sample
 
 
 
-## Dodatkowe funkacjonalności
+## Dodatkowe funkcjonalności
 - Raporty są przygotowywane w określonych przez użytkownika datach "od" "do"
 ___________________________
 
