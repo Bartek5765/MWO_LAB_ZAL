@@ -1,4 +1,45 @@
 # MWO_LAB_ZAL
+# MWO_LAB_ZAL
+
+
+# Program do tworzenia raportów R
+
+Program umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
+
+## Dostępne opcje raportów
+
+1. **Pracownicy** – Raport z liczbą godzin przepracowanych przez poszczególnych pracowników.
+2. **Projekty** – Raport z listą pracowników, liczbą przepracowanych godzin oraz procentowym udziałem każdego pracownika w projekcie.
+
+## Instrukcja generowania raportu
+
+Aby wygenerować raport, użyj poniższych opcji w terminalu:
+
+
+rodzaj raportu: -r <employees|projects> 
+ścieżka katalogu: -p <ścieżka_katalogu> 
+data od: -df <RRRR-MM-DD> 
+data do: -dt <RRRR-MM-DD>"
+
+
+
+### Przykład:
+
+Aby wygenerować raport dla pracowników, z danych znajdujących się w katalogu `/var/home/student/IdeaProjects/MWO_LAB_ZAL3/sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
+
+
+-r employees -p /var/home/student/IdeaProjects/MWO_LAB_ZAL3/sample-data -df 2020-01-01 -dt 2025-01-01
+
+
+
+## Wymagania
+
+
+- Odpowiednia struktura katalogów i plików wejściowych
+___________________________
+
+
+
 Program do generowania raportów aktywności pracowników. 
 
 Funkcojalności programów zawierają przygotowanie raportów:
