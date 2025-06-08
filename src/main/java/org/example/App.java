@@ -18,7 +18,7 @@ private final ExcelLoader excelLoader;
 
 
     public App() throws Exception {
-        tasks = new ArrayList<>();
+        tasks = new ArrayList<Task>();
         employees = new HashSet<>();
         projects = new HashSet<>();
         this.excelLoader = new ExcelLoader();
@@ -29,13 +29,24 @@ private final ExcelLoader excelLoader;
         TerminalInput input = new TerminalInput();
         this.input = input.readFromConsole();
         excelLoader.setDirectoryPath(this.input.getRootPath());
+
         ExcelLoader.LoadResult result = excelLoader.loadAllData();
-        this.employees.addAll(result.getEmployees());
-        this.projects.addAll(result.getProjects());
-        this.tasks.addAll(result.getTasks());
-        report = new ReportProject(projects);
+        this.employees = result.getEmployees();
+        this.projects = result.getProjects();
+        this.tasks = result.getTasks();
+
+
+        switch (this.input.getReportType()) {
+            case employees:
+                report = new ReportEmployee(this.employees);
+                break;
+            case projects:
+                report = new ReportProject(this.projects);
+                break;
+            default:
+                break;
+        }
         printer = new ReportPrinter();
         String s = printer.printToTerminal(report);
-        System.out.println(s);
     }
 }
