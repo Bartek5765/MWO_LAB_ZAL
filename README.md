@@ -37,11 +37,11 @@ data do: -dt <RRRR-MM-DD>"
 
 Aby wygenerować raport dla pracowników, z danych znajdujących się w katalogu `./sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
 
--r employees -p ./sample-data -df 2020-01-01 -dt 2025-01-01
+`-r employees -p ./sample-data -df 2020-01-01 -dt 2025-01-01`
 
 Aby wygenerować raport dla najlepszych 5 pracowników, z danych znajdujących się w katalogu `./sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
 
--r top -p ./sample-data -df 2020-01-01 -dt 2025-01-01 -top 5
+`r top -p ./sample-data -df 2020-01-01 -dt 2025-01-01 -top 5`
 
 
 Częste błędy:
