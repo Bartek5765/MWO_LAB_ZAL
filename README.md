@@ -19,6 +19,7 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
 3. **Report: TOP (raport po pracownikach)**  
    Funkcjonalności raportu:
    - lista "najlepszych" pracowników z sumą godzin wypracowaną w projektach.
+   - możliwośc podania ilości pracowników, domyślnie przyjmowana wartość "10"
 
 
 
@@ -27,11 +28,15 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
 Aby wygenerować raport, użyj poniższych opcji w terminalu:
 
 
-rodzaj raportu: -r <employees|projects> 
+rodzaj raportu: -r <employees|projects|top> 
 ścieżka katalogu: -p <ścieżka_katalogu> 
 data od: -df <RRRR-MM-DD> 
 data do: -dt <RRRR-MM-DD>"
 
+
+dla raportu top, możliwość określenia ilości pracowników poprzez podanie wartości liczbowej, 
+-top <liczba pracowników>
+przy braku wartości domyślnie przyjmowane jest "10"
 
 
 
