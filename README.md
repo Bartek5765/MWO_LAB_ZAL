@@ -67,7 +67,7 @@ java -jar report.jar -r top -p ../sample-data -df 2020-01-01 -dt 2025-01-01
 
 Raport 2 - projekty plus pracownicy i ilość czasu poświęconego na projekt (tylko typ raportu i ścieżka jest wymagana)
 ```
-java -jar report.jar -r project -p ../sample-data
+java -jar report.jar -r projectS -p ../sample-data
 ```
 
 Raport bez żadnych danych
