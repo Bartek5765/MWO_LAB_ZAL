@@ -9,22 +9,30 @@ public class ReportProject implements IReport {
         this.projects = projects;
     }
 
-    public String getStringSumOfHours(Project project) {
+    public float getFloatSumOfHours(Project project) {
         float sumOfHours = 0;
         for (Task task : project.getTasks()) {
             sumOfHours += task.getDuration();
         }
-        return String.format("%.2f", sumOfHours);
+        return sumOfHours;
     }
 
-    public String getSumOfEmployeeHours(Project project, Employee employee) {
+    public float getFloatSumOfHours(Project project, Employee employee) {
         float sumOfHours = 0;
         for (Task task : employee.getTasks()) {
             if (task.getProject().getName().equals(project.getName())) {
                 sumOfHours += task.getDuration();
             }
         }
-        return String.format("%.2f", sumOfHours);
+        return sumOfHours;
+    }
+
+    public String getStringSumOfHours(Project project) {
+        return String.format("%.2f", getFloatSumOfHours(project));
+    }
+
+    public String getSumOfEmployeeHours(Project project, Employee employee) {
+        return String.format("%.2f", getFloatSumOfHours(project, employee));
     }
 
     public String getName() {
@@ -40,7 +48,9 @@ public class ReportProject implements IReport {
             sb.append("Project Employees: \n");
             for (Employee employee : project.getEmployees()) {
                 sb.append("\t").append(employee.getName()).append("\t");
-                sb.append(getSumOfEmployeeHours(project, employee)).append("\n");
+                sb.append(getSumOfEmployeeHours(project, employee)).append("\t");
+                float procent = getFloatSumOfHours(project, employee) / getFloatSumOfHours(project) * 100;
+                sb.append(String.format("%.2f", procent)).append("%").append("\n");
             }
             sb.append("<<<<\n");
         }

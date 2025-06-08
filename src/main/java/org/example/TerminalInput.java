@@ -68,10 +68,10 @@ public class TerminalInput {
         // Opcjonalny zakres dat od-do
         LocalDate fromDate = null;
         LocalDate toDate = null;
-        if (args.length >= 5) {
+        if (args.length <= 4) {
             try {
-                fromDate = LocalDate.parse(args[3], DATE_FORMATTER);
-                toDate = LocalDate.parse(args[4], DATE_FORMATTER);
+                fromDate = LocalDate.parse(args[2], DATE_FORMATTER);
+                toDate = LocalDate.parse(args[3], DATE_FORMATTER);
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException(
                         "Daty muszą być w formacie RRRR-MM-DD", e);
@@ -83,6 +83,7 @@ public class TerminalInput {
         }
 
 //        return new TerminalInput(rt, rootPath, ym, fromDate, toDate);
+
         this.reportType = rt;
         this.rootPath = rootPath;
         this.fromDate = fromDate;
