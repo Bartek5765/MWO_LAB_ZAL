@@ -1,5 +1,6 @@
 package org.example;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReportEmployee implements IReport {
 
@@ -7,6 +8,14 @@ public class ReportEmployee implements IReport {
 
     public ReportEmployee(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    public float getFloatSumOfHours(Employee employee) {
+        float sumOfHours = 0;
+        for (Task task : employee.getTasks()) {
+            sumOfHours += task.getDuration();
+        }
+        return sumOfHours;
     }
 
     public String getStringSumOfHours(Employee employee) {
@@ -23,10 +32,19 @@ public class ReportEmployee implements IReport {
 
     public String getReportString() {
         StringBuilder sb = new StringBuilder();
+        HashMap<String, Float> set = new HashMap<>();
         for (Employee employee : employees) {
-            sb.append(employee.getName()).append("\t");
-            sb.append(getStringSumOfHours(employee)).append("\n");
+            set.put(employee.getName(), getFloatSumOfHours(employee));
         }
+        List<Map.Entry<String, Float>> sorted = set.entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getValue)).collect(Collectors.toList());
+
+        for (Map.Entry<String, Float> entry : sorted) {
+            sb.append(entry.getKey());
+            sb.append("\t");
+            sb.append(entry.getValue());
+            sb.append("\n");
+        }
+
         return sb.toString();
     }
 }

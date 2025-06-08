@@ -1,5 +1,6 @@
 package org.example;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReportProject implements IReport {
 
@@ -46,10 +47,20 @@ public class ReportProject implements IReport {
             sb.append(getStringSumOfHours(project)).append("\n");
             sb.append(">>>>\n");
             sb.append("Project Employees: \n");
+
+            HashMap<String, Float> set = new HashMap<>();
             for (Employee employee : project.getEmployees()) {
-                sb.append("\t").append(employee.getName()).append("\t");
-                sb.append(getSumOfEmployeeHours(project, employee)).append("\t");
-                float procent = getFloatSumOfHours(project, employee) / getFloatSumOfHours(project) * 100;
+                set.put(employee.getName(), getFloatSumOfHours(project, employee));
+            }
+            List<Map.Entry<String, Float>> sorted = set.entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getValue)).collect(Collectors.toList());
+
+            for (Map.Entry<String, Float> entry : sorted) {
+                sb.append("\t");
+                sb.append(entry.getKey());
+                sb.append("\t");
+                sb.append(entry.getValue());
+                sb.append("\t");
+                float procent = entry.getValue() / getFloatSumOfHours(project) * 100;
                 sb.append(String.format("%.2f", procent)).append("%").append("\n");
             }
             sb.append("<<<<\n");

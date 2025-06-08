@@ -1,7 +1,7 @@
 package org.example;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReportTop10 extends ReportEmployee implements IReport {
 
@@ -57,10 +57,20 @@ public class ReportTop10 extends ReportEmployee implements IReport {
     @Override
     public String getReportString() {
         StringBuilder sb = new StringBuilder();
-        for (Employee employee : top10Employees) {
-            sb.append(employee.getName()).append("\t");
-            sb.append(getStringSumOfHours(employee)).append("\n");
+
+        HashMap<String, Float> set = new HashMap<>();
+        for (Employee employee : employees) {
+            set.put(employee.getName(), getFloatSumOfHours(employee));
         }
+        List<Map.Entry<String, Float>> sorted = set.entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getValue)).collect(Collectors.toList());
+
+        for (Map.Entry<String, Float> entry : sorted) {
+            sb.append(entry.getKey());
+            sb.append("\t");
+            sb.append(entry.getValue());
+            sb.append("\n");
+        }
+
         return sb.toString();
     }
 }
