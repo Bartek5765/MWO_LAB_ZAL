@@ -13,6 +13,9 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
    - listę pracowników uczestniczących w projekcie;
    - liczbę godzin przepracowanych przez danego pracownika w projekcie;
    - procentowy udział godzinowy pracownika odniesiony do godzin z całego projektu.
+  
+3. **Report:TOP (raport po pracownikach)**
+      - listę pracowników z sumą godzin wypracowaną w projekcie.
 
 ## Instrukcja generowania raportu
 
