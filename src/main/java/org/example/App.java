@@ -1,9 +1,6 @@
 package org.example;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.ParseException;
 import org.example.loader.ExcelLoader;
 
 import java.util.ArrayList;
@@ -19,6 +16,14 @@ public class App {
 private final ExcelLoader excelLoader;
     IReport report;
     ReportPrinter printer;
+
+    public App() {
+        tasks = new ArrayList<>();
+        employees = new HashSet<>();
+        projects = new HashSet<>();
+        this.excelLoader = new ExcelLoader();
+        this.input = new TerminalInput();
+    }
 
     public App(String[] args) throws Exception {
         tasks = new ArrayList<>();
@@ -60,5 +65,13 @@ private final ExcelLoader excelLoader;
         }
         printer = new ReportPrinter();
         String s = printer.printToTerminal(report);
+
+        generateReports();
+    }
+
+
+    private void generateReports() {
+            ReportExporter.generateAllReports(this.employees, this.projects, this.tasks);
+
     }
 }
