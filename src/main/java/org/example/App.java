@@ -53,7 +53,7 @@ private final ExcelLoader excelLoader;
             case projects:
                 report = new ReportProject(this.projects);
                 break;
-            case top10:
+            case top:
                 report = new ReportTop10(this.employees, this.input.getTopNumber());
             default:
                 break;
