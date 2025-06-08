@@ -1,14 +1,18 @@
 # MWO_LAB_ZAL
 
 
-# Program do tworzenia raportów R
+Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
 
-Program umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
+## Dostępne opcje raportów:
 
-## Dostępne opcje raportów
-
-1. **Pracownicy** – Raport z liczbą godzin przepracowanych przez poszczególnych pracowników.
-2. **Projekty** – Raport z listą pracowników, liczbą przepracowanych godzin oraz procentowym udziałem każdego pracownika w projekcie.
+1. **Report:Employee Report (raport po pracownikach)**
+      - listę pracowników z sumą godzin wypracowaną w projekcie.
+        
+2. **Report:Projects Report (raport po projektach)**
+   - listę projektów z sumą wypracowanych godzin;
+   - listę pracowników uczestniczących w projekcie;
+   - liczbę godzin przepracowanych przez danego pracownika w projekcie;
+   - procentowy udział godzinowy pracownika odniesiony do godzin z całego projektu.
 
 ## Instrukcja generowania raportu
 
