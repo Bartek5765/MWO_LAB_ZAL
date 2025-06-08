@@ -26,7 +26,9 @@ private final ExcelLoader excelLoader;
         projects = new HashSet<>();
         this.excelLoader = new ExcelLoader();
         this.input = new TerminalInput();
-        this.input.fromArgs(args);
+        CliOptions cliOptions = new CliOptions();
+        CommandLine lines = cliOptions.parse(args);
+        this.input.fromArgs(lines);
         run();
     }
 
