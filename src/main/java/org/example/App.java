@@ -28,8 +28,8 @@ private final ExcelLoader excelLoader;
     public void run() throws Exception {
         TerminalInput input = new TerminalInput();
         this.input = input.readFromConsole();
-        excelLoader.setPath(this.input.getRootPath());
-        ExcelLoader.LoadResult result = excelLoader.loadData();
+        excelLoader.setDirectoryPath(this.input.getRootPath());
+        ExcelLoader.LoadResult result = excelLoader.loadAllData();
         this.employees.addAll(result.getEmployees());
         this.projects.addAll(result.getProjects());
         this.tasks.addAll(result.getTasks());
