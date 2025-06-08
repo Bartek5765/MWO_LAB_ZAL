@@ -47,19 +47,19 @@ przy braku wartości domyślnie przyjmowane jest "10"
 
 ### Przykład:
 
-Aby wygenerować raport dla pracowników, z danych znajdujących się w katalogu `./sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
+Aby wygenerować raport 1 dla pracowników, z danych znajdujących się w katalogu `./sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
 
 ```
 java -jar report.jar -r employees -p ../sample-data -df 2020-01-01 -dt 2025-01-01
 ```
 
-Aby wygenerować raport dla najlepszych 5 pracowników, z danych znajdujących się w katalogu `../sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
+Aby wygenerować raport 3 dla najlepszych 5 pracowników, z danych znajdujących się w katalogu `../sample-data` na okres od 1 stycznia 2020 roku do 1 stycznia 2025 roku, użyj poniższego polecenia:
 
 ```
 java -jar report.jar -r top -p ../sample-data -df 2020-01-01 -dt 2025-01-01 -top 5
 ```
 
-Domyślnie w typie raportu top wyszukuje 10 najlepszych pracowników
+Domyślnie w typie raportu 3 top wyszukuje 10 najlepszych pracowników
 ```
 java -jar report.jar -r top -p ../sample-data -df 2020-01-01 -dt 2025-01-01 
 ```
@@ -67,10 +67,10 @@ java -jar report.jar -r top -p ../sample-data -df 2020-01-01 -dt 2025-01-01
 
 Raport 2 - projekty plus pracownicy i ilość czasu poświęconego na projekt (tylko typ raportu i ścieżka jest wymagana)
 ```
-java -jar report.jar -r projectS -p ../sample-data
+java -jar report.jar -r projects -p ../sample-data
 ```
 
-Raport bez żadnych danych
+Raport 3 bez żadnych danych
 ```
 java -jar report.jar -r top -p ../sample-data/Projekt1/2022 -df 2028-09-09 
 ```
