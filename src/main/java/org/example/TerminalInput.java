@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.File;
 import java.time.YearMonth;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -46,16 +47,21 @@ public class TerminalInput {
             throw new IllegalArgumentException(
                     "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM> [<RRRR-MM-DD> <RRRR-MM-DD>]");
         }
+
         // Parsowanie typu raportu
         ReportType rt;
         try {
-            rt = ReportType.valueOf(args[0]);//.toUpperCase());
+            rt = ReportType.valueOf(args[0]);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
-                    "Nieznany typ raportu: " + args[0] + ". Dostępne: EMPLOYEES, PROJECTS", e);
+                    "Nieznany typ raportu: " + args[0] + ". Dostępne: employees, projects", e);
         }
         // Ścieżka do katalogu z plikami
         String rootPath = args[1];
+        File rootDir = new File(rootPath);
+        if (!rootDir.exists() || !rootDir.isDirectory()) {
+            throw new IllegalArgumentException("Ścieżka '" + rootPath + "' nie istnieje lub nie jest katalogiem.");
+        }
 
         // Parsowanie okresu (rok-miesiąc)
         YearMonth ym;
@@ -64,6 +70,10 @@ public class TerminalInput {
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Okres musi być w formacie RRRR-MM", e);
         }
+        if (ym.isAfter(YearMonth.now())) {
+            throw new IllegalArgumentException("Nie można wygenerować raportu dla przyszłego okresu: " + ym);
+        }
+
 
         // Opcjonalny zakres dat od-do
         LocalDate fromDate = null;
