@@ -8,6 +8,7 @@ public class ReportPrinter {
         sb.append("\n");
         sb.append(report.getReportString());
         sb.append("\n");
+        System.out.println(sb.toString());
         return sb.toString();
     }
 }
