@@ -1,5 +1,4 @@
 # MWO_LAB_ZAL
-# MWO_LAB_ZAL
 
 
 # Program do tworzenia raportów R
