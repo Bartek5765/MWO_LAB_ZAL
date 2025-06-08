@@ -7,7 +7,12 @@ import java.util.HashSet;
 public class Filter {
 
     public ArrayList<Task> filterTasksByData(ArrayList<Task> tasks, LocalDate fromDate, LocalDate toDate) {
-        tasks.removeIf(task -> task.getDuration() < fromDate.toEpochDay() && task.getDuration() > toDate.toEpochDay());
+        HashSet<Task> filteredTasks = new HashSet<>();
+        for (Task task : tasks) {
+            if (task.getDate().isAfter(fromDate) && task.getDate().isBefore(toDate)) {
+                filteredTasks.add(task);
+            }
+        }
         return tasks;
     }
 
