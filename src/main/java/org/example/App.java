@@ -35,6 +35,11 @@ private final ExcelLoader excelLoader;
         this.projects = result.getProjects();
         this.tasks = result.getTasks();
 
+        Filter filter = new Filter();
+        this.employees = filter.filterEmployeesByData((HashSet<Employee>) this.employees, this.input.getFromDate(), this.input.getToDate());
+        this.projects = filter.filterProjectsByData((HashSet<Project>) this.projects, this.input.getFromDate(), this.input.getToDate());
+        this.tasks = filter.filterTasksByData( this.tasks, this.input.getFromDate(), this.input.getToDate());
+
         switch (this.input.getReportType()) {
             case employees:
                 report = new ReportEmployee(this.employees);
