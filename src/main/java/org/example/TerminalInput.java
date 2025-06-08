@@ -1,6 +1,5 @@
 package org.example;
 
-import java.io.File;
 import java.time.YearMonth;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +8,7 @@ import java.time.format.DateTimeParseException;
 
  // Klasa odpowiadająca za parsowanie parametrów wejściowych programu.
  // Użycie:
- // java -jar raport.jar <reportType> <ścieżka_katalogu> <RRRR-MM> [<RRRR-MM-DD> <RRRR-MM-DD>]
+ // java -jar raport.jar <reportType> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>
 
 public class TerminalInput {
     private ReportType reportType;
@@ -19,7 +18,7 @@ public class TerminalInput {
     private LocalDate toDate;
 
     // Formatter dla okresu (rok-miesiąc)
-    private static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
+//    private static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
     // Formatter dla zakresu dat (rok-miesiąc-dzień)
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -45,35 +44,26 @@ public class TerminalInput {
     public void fromArgs(String[] args) {
         if (args == null || args.length < 3) {
             throw new IllegalArgumentException(
-                    "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM> [<RRRR-MM-DD> <RRRR-MM-DD>]");
+                    "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>");
         }
-
         // Parsowanie typu raportu
         ReportType rt;
         try {
-            rt = ReportType.valueOf(args[0]);
+            rt = ReportType.valueOf(args[0]);//.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
-                    "Nieznany typ raportu: " + args[0] + ". Dostępne: employees, projects", e);
+                    "Nieznany typ raportu: " + args[0] + ". Dostępne: EMPLOYEES, PROJECTS", e);
         }
         // Ścieżka do katalogu z plikami
         String rootPath = args[1];
-        File rootDir = new File(rootPath);
-        if (!rootDir.exists() || !rootDir.isDirectory()) {
-            throw new IllegalArgumentException("Ścieżka '" + rootPath + "' nie istnieje lub nie jest katalogiem.");
-        }
 
-        // Parsowanie okresu (rok-miesiąc)
-        YearMonth ym;
-        try {
-            ym = YearMonth.parse(args[2], YM_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Okres musi być w formacie RRRR-MM", e);
-        }
-        if (ym.isAfter(YearMonth.now())) {
-            throw new IllegalArgumentException("Nie można wygenerować raportu dla przyszłego okresu: " + ym);
-        }
-
+//        // Parsowanie okresu (rok-miesiąc)
+//        YearMonth ym;
+//        try {
+//            ym = YearMonth.parse(args[2], YM_FORMATTER);
+//        } catch (DateTimeParseException e) {
+//            throw new IllegalArgumentException("Okres musi być w formacie RRRR-MM", e);
+//        }
 
         // Opcjonalny zakres dat od-do
         LocalDate fromDate = null;
