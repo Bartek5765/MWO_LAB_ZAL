@@ -22,7 +22,7 @@ public class Task {
 
     public Task(LocalDate date, String taskName, float duration) {
         this.date = date;
-        this.name = taskName;
+        this.taskName = taskName;
         this.duration = duration;
     }
 

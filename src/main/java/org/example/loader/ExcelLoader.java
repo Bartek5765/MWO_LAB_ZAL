@@ -604,23 +604,27 @@ public class ExcelLoader {
     public static class LoadResult {
         private final Set<Employee> employees;
         private final Set<Project> projects;
-        private final List<Task> tasks;
+        private final ArrayList<Task> tasks;
         private final List<String> processingErrors; // Nowe pole
 
-        public LoadResult(Set<Employee> employees, Set<Project> projects, List<Task> tasks) {
+        public LoadResult(Set<Employee> employees, Set<Project> projects, ArrayList<Task> tasks) {
             this(employees, projects, tasks, new ArrayList<>());
         }
 
-        public LoadResult(Set<Employee> employees, Set<Project> projects, List<Task> tasks, List<String> processingErrors) {
+        public LoadResult(Set<Employee> employees, Set<Project> projects, ArrayList<Task> tasks, List<String> processingErrors) {
             this.employees = employees;
             this.projects = projects;
             this.tasks = tasks;
             this.processingErrors = processingErrors != null ? processingErrors : new ArrayList<>();
+
+            for (Task task : tasks) {
+                System.out.println(task.getName());
+            }
         }
 
         public Set<Employee> getEmployees() { return employees; }
         public Set<Project> getProjects() { return projects; }
-        public List<Task> getTasks() { return new ArrayList<>(tasks); }
+        public ArrayList<Task> getTasks() { return new ArrayList<>(tasks); }
         public List<String> getProcessingErrors() { return new ArrayList<>(processingErrors); }
 
         // Przydatne metody dla raportowania
