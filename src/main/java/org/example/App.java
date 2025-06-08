@@ -30,12 +30,12 @@ private final ExcelLoader excelLoader;
 
     private void loadDataFromExcel() throws Exception {
 
-        excelLoader.setPath(input.getRootPath());
-        ExcelLoader.LoadResult result = excelLoader.loadData();
+        excelLoader.setDirectoryPath(input.getRootPath());
+        ExcelLoader.LoadResult result = excelLoader.loadAllData();
 
         this.employees = result.getEmployees();
         this.projects = result.getProjects();
-        this.tasks = result.getTasks();
+        this.tasks = new ArrayList<>(result.getTasks());
 
         System.out.println("Employees: " + employees.size());
         System.out.println("Projects: " + projects.size());
