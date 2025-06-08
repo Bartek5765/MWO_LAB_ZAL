@@ -1,11 +1,11 @@
 # MWO_LAB_ZAL
 Program do generowania raportów aktywności pracowników. 
 
-Funkcojalności programów zawierają przygotowanie raportów:
-Report:Employee Report (raport po pracownikach) - podaje:
+**Funkcojalności programów zawierają przygotowanie raportów:**
+**Report:Employee Report **(raport po pracownikach) - podaje:
    - listę pracowników z sumą godzin wypracowaną w projekcie.
 
-Report:Projects Report (raport po projektach) - podaje:
+**Report:Projects Report** (raport po projektach) - podaje:
    - listę projektów z sumą wypracowanych godzin;
    - listę pracowników uczestniczących w projekcie;
    - liczbę godzin przepracowanych przez danego pracownika w projekcie;
