@@ -49,10 +49,15 @@ Aby wygenerować raport dla najlepszych 5 pracowników, z danych znajdujących s
 
 
 Częste błędy:
--r projects -p ./sample-data -df 2000-01-01 -dt 2022/01/01 
+```
+-r projects -p ./sample-data -df 2000-01-01 -dt 2022/01/01
+```
 !Daty muszą być w formacie RRRR-MM-DD!
 
+```
 -r projects -p ./sample-data -df 2023-01-01 -dt 2022-01-01
+```
+
 !Data początkowa nie może być po dacie końcowej!
 
 
