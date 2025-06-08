@@ -1,9 +1,7 @@
 # MWO_LAB_ZAL
 
 
-# Program do tworzenia raportów R
-
-Program umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
+Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
 
 ## Dostępne opcje raportów
 
