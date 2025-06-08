@@ -1,23 +1,24 @@
 # MWO_LAB_ZAL
 
-
 Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
 
 ## Dostępne opcje raportów:
 
-1. **Report:Employee Report (raport po pracownikach)**
-   Funkcojalności raportu:
-      - lista pracowników z sumą godzin wypracowaną w projekcie.
-        
-3. **Report:Projects Report (raport po projektach)**
-    Funkcojalności raportu:
+1. **Report: Employee Report (raport po pracownikach)**  
+   Funkcjonalności raportu:
+   - lista pracowników z sumą godzin wypracowaną w projekcie.
+
+2. **Report: Projects Report (raport po projektach)**  
+   Funkcjonalności raportu:
    - lista projektów z sumą wypracowanych godzin;
    - lista pracowników uczestniczących w projekcie;
    - liczba godzin przepracowanych przez danego pracownika w projekcie;
    - procentowy udział godzinowy pracownika odniesiony do godzin z całego projektu.
-  
-5. **Report:TOP (raport po pracownikach)**
-      - lista "najlepszych" pracowników z sumą godzin wypracowaną w projektach.
+
+3. **Report: TOP (raport po pracownikach)**  
+   Funkcjonalności raportu:
+   - lista "najlepszych" pracowników z sumą godzin wypracowaną w projektach.
+
 
 ## Instrukcja generowania raportu
 
