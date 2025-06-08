@@ -2,6 +2,7 @@
 
 Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie danych o pracownikach i projektach.
 
+
 ## Dostępne opcje raportów:
 
 1. **Report: Employee Report (raport po pracownikach)**  
@@ -18,6 +19,7 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
 3. **Report: TOP (raport po pracownikach)**  
    Funkcjonalności raportu:
    - lista "najlepszych" pracowników z sumą godzin wypracowaną w projektach.
+
 
 
 ## Instrukcja generowania raportu
@@ -77,14 +79,9 @@ java -jar report.jar -r top -p /var/home/student/IdeaProjects/MWO_LAB_ZAL/sample
 !Data początkowa nie może być po dacie końcowej!
 
 
+
 ## Dodatkowe funkacjonalności
-Raporty są przygotowywane w określonych przez użytkownika datach "od" "do"
-
-
-## Wymagania
-
-
-- Odpowiednia struktura katalogów i plików wejściowych
+- Raporty są przygotowywane w określonych przez użytkownika datach "od" "do"
 ___________________________
 
 
