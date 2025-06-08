@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 
  // Klasa odpowiadająca za parsowanie parametrów wejściowych programu.
  // Użycie:
- // java -jar raport.jar <reportType> <ścieżka_katalogu> <RRRR-MM> [<RRRR-MM-DD> <RRRR-MM-DD>]
+ // java -jar raport.jar <reportType> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>
 
 public class TerminalInput {
     private ReportType reportType;
@@ -18,7 +18,7 @@ public class TerminalInput {
     private LocalDate toDate;
 
     // Formatter dla okresu (rok-miesiąc)
-    private static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
+//    private static final DateTimeFormatter YM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
     // Formatter dla zakresu dat (rok-miesiąc-dzień)
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -44,7 +44,7 @@ public class TerminalInput {
     public void fromArgs(String[] args) {
         if (args == null || args.length < 3) {
             throw new IllegalArgumentException(
-                    "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM> [<RRRR-MM-DD> <RRRR-MM-DD>]");
+                    "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>");
         }
         // Parsowanie typu raportu
         ReportType rt;
@@ -57,13 +57,13 @@ public class TerminalInput {
         // Ścieżka do katalogu z plikami
         String rootPath = args[1];
 
-        // Parsowanie okresu (rok-miesiąc)
-        YearMonth ym;
-        try {
-            ym = YearMonth.parse(args[2], YM_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Okres musi być w formacie RRRR-MM", e);
-        }
+//        // Parsowanie okresu (rok-miesiąc)
+//        YearMonth ym;
+//        try {
+//            ym = YearMonth.parse(args[2], YM_FORMATTER);
+//        } catch (DateTimeParseException e) {
+//            throw new IllegalArgumentException("Okres musi być w formacie RRRR-MM", e);
+//        }
 
         // Opcjonalny zakres dat od-do
         LocalDate fromDate = null;
