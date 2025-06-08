@@ -40,7 +40,7 @@ data do: -dt <RRRR-MM-DD>
 `
 
 dla raportu top, możliwość określenia ilości pracowników poprzez podanie wartości liczbowej, 
--top <liczba pracowników>
+`-top <liczba pracowników>`
 przy braku wartości domyślnie przyjmowane jest "10"
 
 
