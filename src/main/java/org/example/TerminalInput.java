@@ -36,7 +36,7 @@ public class TerminalInput {
 
         if (args == null ) {
             throw new IllegalArgumentException(
-                    "Użycie: java -jar raport.jar <employees|projects> <ścieżka_katalogu> <RRRR-MM-DD> <RRRR-MM-DD>");
+                    "Użycie: java -jar raport.jar -r <employees|projects> -p <ścieżka_katalogu> -df <RRRR-MM-DD> -dt <RRRR-MM-DD>");
         }
         reportType = null;
         if (args.hasOption("r")) {
@@ -64,12 +64,10 @@ public class TerminalInput {
         LocalDate fromDate = null;
         LocalDate toDate = null;
 
-        if (args.hasOption("df")) {
-            fromDate = LocalDate.parse(args.getOptionValue("df"), DATE_FORMATTER);
+        if (!args.hasOption("df") || !args.hasOption("dt")) {
+            throw new IllegalArgumentException("muszą być podane obie daty");
         }
-        if (args.hasOption("dt")) {
-            toDate = LocalDate.parse(args.getOptionValue("dt"), DATE_FORMATTER);
-        }
+
             try {
                 fromDate = LocalDate.parse(args.getOptionValue("df"), DATE_FORMATTER);
                 toDate = LocalDate.parse(args.getOptionValue("dt"), DATE_FORMATTER);
@@ -82,9 +80,6 @@ public class TerminalInput {
                         "Data początkowa nie może być po dacie końcowej");
             }
 
-            if (args.getOptionValue("df") == null || args.getOptionValue("dt") == null) {
-                throw new IllegalArgumentException("muszą być podane obie daty");
-            }
 
         this.reportType = reportType;
         this.rootPath = rootPath;
