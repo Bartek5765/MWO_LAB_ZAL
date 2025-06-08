@@ -13,35 +13,29 @@ public class App {
     public Set<Project> projects;
 //    public final ReportType reportType;
 private final ExcelLoader excelLoader;
+    IReport report;
+    ReportPrinter printer;
 
 
-    public App() {
+    public App() throws Exception {
         tasks = new ArrayList<>();
         employees = new HashSet<>();
         projects = new HashSet<>();
         this.excelLoader = new ExcelLoader();
+        run();
     }
 
     public void run() throws Exception {
         TerminalInput input = new TerminalInput();
         this.input = input.readFromConsole();
-        loadDataFromExcel();
-    }
-
-    private void loadDataFromExcel() throws Exception {
-
-        excelLoader.setPath(input.getRootPath());
+        excelLoader.setPath(this.input.getRootPath());
         ExcelLoader.LoadResult result = excelLoader.loadData();
-
-        this.employees = result.getEmployees();
-        this.projects = result.getProjects();
-        this.tasks = result.getTasks();
-
-        System.out.println("Employees: " + employees.size());
-        System.out.println("Projects: " + projects.size());
-        System.out.println("Tasks: " + tasks.size());
-
-
+        this.employees.addAll(result.getEmployees());
+        this.projects.addAll(result.getProjects());
+        this.tasks.addAll(result.getTasks());
+        report = new ReportProject(projects);
+        printer = new ReportPrinter();
+        String s = printer.printToTerminal(report);
+        System.out.println(s);
     }
-
 }
