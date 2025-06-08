@@ -5,21 +5,46 @@ import java.util.Set;
 
 public class ReportTop10 extends ReportEmployee implements IReport {
 
-    Set<Employee> employees;
     Set<Employee> top10Employees;
 
-    public ReportTop10(Set<Employee> employees) {
+    public ReportTop10(Set<Employee> employees, int topNumber) {
         super(employees);
+        findTop10(this.employees, topNumber);
     }
 
-    public Set<Employee> findTop10(Set<Employee> employees) {
-        this.top10Employees = new HashSet<>(employees);
+    public Employee findEmployeeWithLowestHours(Set<Employee> employees) {
+        float lowestHours = -1;
+        Employee foundedEmployee = null;
         for (Employee employee : employees) {
-            if (top10Employees.size() < 10) {
-                top10Employees.add(employee);
+            if (getFloatSumOfHours(employee) < lowestHours || lowestHours == -1) {
+                foundedEmployee = employee;
+                lowestHours = getFloatSumOfHours(employee);
             }
         }
-        return top10Employees;
+        return foundedEmployee;
+    }
+
+    public float getFloatSumOfHours(Employee employee) {
+        float sumOfHours = 0;
+        for (Task task : employee.getTasks()) {
+            sumOfHours += task.getDuration();
+        }
+        return sumOfHours;
+    }
+
+    public void findTop10(Set<Employee> employees, int topNumber) {
+        this.top10Employees = new HashSet<>();
+        for (Employee employee : employees) {
+            if (top10Employees.size() < topNumber) {
+                top10Employees.add(employee);
+            } else {
+                Employee lowestTop = findEmployeeWithLowestHours(this.top10Employees);
+                if (getFloatSumOfHours(lowestTop) < getFloatSumOfHours(employee)) {
+                    top10Employees.remove(lowestTop);
+                    top10Employees.add(employee);
+                }
+            }
+        }
     }
 
     @Override
