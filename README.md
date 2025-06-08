@@ -90,7 +90,7 @@ java -jar report.jar -r top -p ../sample-data/Projekt1/2022 -df 2028-09-09
 
 
 ## Dodatkowe funkcjonalności
-- Raporty są przygotowywane w określonych przez użytkownika datach "od" "do"
+- Raporty są przygotowywane w określonych przez użytkownika datach "od" "do".
 - W przypadku błędnego uzupełnienia pliku xls na poczatku raportu pojawia się szczegółowy opis błędów i ich lokalizacja. Zakres objętych błędów: "nieprawidłowy czas - w przypadku podania 0", "nieprawidłowy format podania godzin", "puste pola".
 ___________________________
 
