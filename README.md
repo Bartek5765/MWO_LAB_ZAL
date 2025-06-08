@@ -7,7 +7,7 @@ Program do tworzenia raportów. Umożliwia generowanie raportów na podstawie da
 
 1. **Report: Employee Report (raport po pracownikach)**  
    Funkcjonalności raportu:
-   - lista pracowników z sumą godzin wypracowaną w projekcie.
+   - lista pracowników z sumą godzin wypracowaną we wszystkich projektach.
 
 2. **Report: Projects Report (raport po projektach)**  
    Funkcjonalności raportu:
